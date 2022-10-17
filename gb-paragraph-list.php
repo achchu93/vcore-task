@@ -20,7 +20,16 @@
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_gb_paragraph_list_block_init() {
-	register_block_type( __DIR__ . '/build' );
+function vcore_enqueue_block_editor_assets() {
+	$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
+
+	wp_enqueue_script(
+		'gb-paragraph-list',
+		plugins_url( 'build/index.js', __FILE__ ),
+		$asset_file['dependencies'],
+		$asset_file['version'],
+		true
+	);
+
 }
-add_action( 'init', 'create_block_gb_paragraph_list_block_init' );
+add_action( 'enqueue_block_editor_assets', 'vcore_enqueue_block_editor_assets' );
